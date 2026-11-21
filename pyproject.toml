@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools>=61.0"]
+requires = ["setuptools>=77.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -8,10 +8,34 @@ version = "0.1.0"
 description = "A text-based secret room puzzle adventure game in Python."
 readme = "README.md"
 requires-python = ">=3.8"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [
+    { name = "zekaipeng14-netizen" },
+    { name = "Fenice723" },
+    { name = "guiyifei1014-boop" },
+    { name = "guosonglin999-hue" },
+]
+keywords = ["game", "text-adventure", "escape-room", "puzzle", "terminal"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+    "Environment :: Console",
+    "Topic :: Games/Entertainment :: Puzzle Games",
+    "Intended Audience :: Education",
+]
 dependencies = []
+
+[project.optional-dependencies]
+dev = ["pytest"]
+
+[project.scripts]
+secret-room = "group14_secret_room.main:main"
 
 [project.urls]
 Homepage = "https://github.com/zekaipeng14-netizen/1302A-Group14"
+Repository = "https://github.com/zekaipeng14-netizen/1302A-Group14"
+Issues = "https://github.com/zekaipeng14-netizen/1302A-Group14/issues"
 
 [tool.setuptools.packages.find]
-where = ["src"] 
+where = ["src"]
