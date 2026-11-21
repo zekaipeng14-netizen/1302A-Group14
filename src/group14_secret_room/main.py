@@ -1,3 +1,12 @@
+"""Secret Room Adventure - a text-based escape-room puzzle game.
+
+Run with ``secret-room`` (after ``pip install group14_secret_room``)
+or ``python -m group14_secret_room``.
+"""
+
+import copy
+import os
+
 # --- 1. Global Item Descriptions (For 'i' command) ---
 ITEM_DESCRIPTIONS = {
     "Calendar": "A desk calendar. [October 24th] is circled heavily in red ink.",
@@ -10,6 +19,7 @@ ITEM_DESCRIPTIONS = {
 LEVELS = {
     1: {
         "title": "Escape the Secret Room: Chapter 1",
+        "hint": "Dates can be written as numbers. What would [October 24th] look like as 4 digits?",
         "start_pos":(3, 1),
         "map": [
             ["#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#"],
@@ -44,6 +54,7 @@ LEVELS = {
     },
     2: {
         "title": "Escape the Secret Room: Chapter 2 - The Study",
+        "hint": "Count the corners of each shape in order and write the counts side by side.",
         "start_pos":(1,1),
         "map": [
             ["#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#"],
@@ -86,8 +97,14 @@ MOVE_OFFSETS = {
 }
 
 # --- 3. Screen Rendering Function ---
-def render_screen(level_data, pos, msg, inv):
-    print("\n" * 20)
+def clear_screen():
+    """Clear the terminal on Windows, macOS and Linux."""
+    os.system("cls" if os.name == "nt" else "clear")
+
+
+def render_screen(level_data, pos, msg, inv, steps=0, clear=True):
+    if clear:
+        clear_screen()
     print(f"=== {level_data['title']} ===")
     grid = level_data["map"]
     for r in range(len(grid)):
@@ -99,32 +116,51 @@ def render_screen(level_data, pos, msg, inv):
                 line.append(grid[r][c])
         print(" ".join(line))
     print("========================================")
-    print(f"[Backpack]: {', '.join(inv) if inv else 'Empty'}")
-    print("Controls: w/a/s/d (Move) | e (Investigate) | i (Inspect Bag) | q (Quit)")
+    print(f"[Backpack]: {', '.join(inv) if inv else 'Empty'}   [Steps]: {steps}")
+    print("Controls: w/a/s/d (Move) | e (Investigate) | i (Inspect Bag) | h (Hint) | q (Quit)")
     print("========================================")
     if msg:
         print(f"> {msg}")
 
+
 # --- 4. Main Game Engine ---
-def run_game():
-    current_level_num = 1
+def run_game(input_func=input, levels=None, clear=True):
+    """Run the game loop.
+
+    ``input_func`` and ``levels`` can be replaced for testing. The level data
+    is deep-copied so the global ``LEVELS`` is never modified and the game can
+    be played again in the same Python session.
+
+    Returns ``True`` if the player escaped all rooms, ``False`` otherwise.
+    """
+    levels = copy.deepcopy(LEVELS if levels is None else levels)
+    current_level_num = min(levels)
     inventory = []
-    
+    steps = 0
+
     # Initialize first level state
-    level_data = LEVELS[current_level_num]
+    level_data = levels[current_level_num]
     player_pos = list(level_data["start_pos"])
     status_msg = "You wake up in a cold room. Find a way out!"
 
     while True:
-        render_screen(level_data, player_pos, status_msg, inventory)
-        cmd = input("Please enter command: ").strip().lower()
+        render_screen(level_data, player_pos, status_msg, inventory, steps, clear)
+        try:
+            cmd = input_func("Please enter command: ").strip().lower()
+        except (EOFError, KeyboardInterrupt):
+            print("\nGame exited.")
+            return False
 
         if not cmd:
             continue
 
         if cmd == "q":
             print("Game exited.")
-            break
+            return False
+
+        # ========== Hint (h) ==========
+        elif cmd == "h":
+            status_msg = "Hint: " + level_data.get("hint", "Look around carefully. Every '?' hides something.")
 
         # ========== Inspect Backpack (i) ==========
         elif cmd == "i":
@@ -162,6 +198,7 @@ def run_game():
             next_c = player_pos[1] + dc
             target_cell = level_data["map"][next_r][next_c]
 
+            steps += 1
             if target_cell == "#":
                 status_msg = "Bang! You bumped into a solid wall."
             elif target_cell == "D":
@@ -170,15 +207,20 @@ def run_game():
                 if req_item in inventory:
                     print(f"\n*** {door_info['unlock_msg']} ***")
                     # Check if there is a next level
-                    if (current_level_num + 1) in LEVELS:
-                        input("Press Enter to continue to the next chapter...")
+                    if (current_level_num + 1) in levels:
+                        try:
+                            input_func("Press Enter to continue to the next chapter...")
+                        except (EOFError, KeyboardInterrupt):
+                            print("\nGame exited.")
+                            return False
                         current_level_num += 1
-                        level_data = LEVELS[current_level_num]
+                        level_data = levels[current_level_num]
                         player_pos = list(level_data["start_pos"])
                         status_msg = f"Welcome to Chapter {current_level_num}!"
                     else:
-                        print("*** CONGRATULATIONS! You have escaped all rooms and cleared the game! ***\n")
-                        break
+                        print("*** CONGRATULATIONS! You have escaped all rooms and cleared the game! ***")
+                        print(f"*** Total steps: {steps} ***\n")
+                        return True
                 else:
                     status_msg = door_info["locked_msg"]
             else:
@@ -211,7 +253,12 @@ def run_game():
                 status_msg = "Nothing noteworthy here."
 
         else:
-            status_msg = "Invalid command! Use w/a/s/d, e, i, or enter a password."
+            status_msg = "Invalid command! Use w/a/s/d, e, i, h, q, or enter a password."
+
+def main():
+    """Console entry point (``secret-room`` command)."""
+    run_game()
+
 
 if __name__ == "__main__":
-    run_game()
+    main()
