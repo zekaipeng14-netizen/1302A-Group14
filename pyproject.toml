@@ -1,0 +1,17 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "group14_secret_room"
+version = "0.1.0"
+description = "A text-based secret room puzzle adventure game in Python."
+readme = "README.md"
+requires-python = ">=3.8"
+dependencies = []
+
+[project.urls]
+Homepage = "https://github.com/zekaipeng14-netizen/1302A-Group14"
+
+[tool.setuptools.packages.find]
+where = ["src"] 
