@@ -76,3 +76,25 @@ def test_quit_and_eof():
 def test_hint_command(capsys):
     run_game(feeder(["h", "q"]), clear=False)
     assert "Hint:" in capsys.readouterr().out
+
+
+def test_save_and_load(tmp_path, capsys):
+    save_file = tmp_path / "save.txt"
+    run_game(feeder(["w", "save", "q"]), clear=False,
+             save_path=save_file, scores_path=tmp_path / "scores.txt")
+    assert save_file.exists()
+    run_game(feeder(["load", "i", "q"]), clear=False,
+             save_path=save_file, scores_path=tmp_path / "scores.txt")
+    assert "Game loaded" in capsys.readouterr().out
+
+
+def test_score_helpers():
+    from group14_secret_room.main import calculate_score, format_duration, score_grade
+
+    assert format_duration(65) == "01:05"
+    assert format_duration(3661) == "01:01:01"
+    assert calculate_score(10, 20, 1, 2) == 9580
+    assert score_grade(9500) == "A"
+    assert score_grade(8000) == "B"
+    assert score_grade(6500) == "C"
+    assert score_grade(100) == "D"
