@@ -8,6 +8,8 @@
 A text-based escape-room puzzle game that runs in any terminal. It needs no dependencies beyond Python's standard library.
 Built for **CS1302A Intro to Computer Programming (Agentic Coding)** by **Group 14**.
 
+▶️ **[Watch the 20-second how-to-play video](https://github.com/zekaipeng14-netizen/1302A-Group14/blob/main/docs/demo.mp4)**
+
 ```
 === Escape the Secret Room: Chapter 1 ===
 # # # # # # # # # # # # #
@@ -35,6 +37,7 @@ Escape-room games train observation and logical deduction. Most of them need a g
 - **Two kinds of interactive clues.** *Pickup* clues give the player items with readable descriptions. *Lock* clues need a password that the player deduces from those items. Together they form a chain: clue → deduction → key → door.
 - **Inventory and inspection.** Press `i` at any time to re-read item descriptions, so the puzzles can be solved by reasoning, not by memory.
 - **Hint system and step counter.** Stuck players can press `h` for a nudge. The step counter gives experienced players a score to beat.
+- **Save, load and performance tracking.** Use `save` and `load` to continue later. The game tracks time, hints, wrong passwords and score, then stores the top ten results in a local text file.
 - **Replayable and testable.** The engine never mutates the level data. `run_game()` accepts a custom input function, so the whole game can be played automatically in unit tests (see `tests/`).
 - **Cross-platform.** The screen is cleared correctly on Windows, macOS and Linux, and Ctrl+C or Ctrl+D quits cleanly.
 
@@ -73,6 +76,8 @@ run_game()
 | `e` | Investigate the tile you are standing on |
 | `i` | Inspect the items in your backpack |
 | `h` | Get a hint for the current chapter |
+| `save` | Save progress to `secret_room_save.txt` |
+| `load` | Load progress from `secret_room_save.txt` |
 | digits, e.g. `1234` | Enter a password while standing on a lock |
 | `q` | Quit |
 
@@ -91,6 +96,7 @@ run_game()
 2. **Teaching Python data structures.** The game shows nested lists (2-D maps), dictionaries keyed by tuples (clue positions), and a state machine (the game loop) in about 250 lines of readable code.
 3. **Designing your own escape room.** Students or teachers can write new chapters as data and share them. No game engine knowledge is needed.
 4. **Automated testing example.** `tests/test_game.py` plays the entire game with scripted input. It is a practical example of testing an interactive program with `pytest`.
+5. **Challenge mode.** Finish quickly, avoid hints and do not enter wrong passwords to get a higher score. The top ten results are stored in `secret_room_scores.txt`.
 
 ### Sample walkthrough (spoiler!)
 
@@ -161,17 +167,19 @@ src/group14_secret_room/
     __init__.py    # public API: run_game, LEVELS, ITEM_DESCRIPTIONS
 tests/             # pytest suite (runs on GitHub Actions)
 prototype/         # our first single-room prototype, kept for reference
-docs/              # demo script and presentation notes
+docs/              # demo video, demo script and presentation notes
+scripts/           # script that renders docs/demo.mp4
 ```
 
 ## Team (Group 14)
 
-| GitHub | Contributions |
-|---|---|
-| [@zekaipeng14-netizen](https://github.com/zekaipeng14-netizen) | Project setup, game engine, packaging, documentation |
-| [@Fenice723](https://github.com/Fenice723) | Game logic (`main.py`) |
-| [@guiyifei1014-boop](https://github.com/guiyifei1014-boop) | Game logic (`main.py`) |
-| [@guosonglin999-hue](https://github.com/guosonglin999-hue) | Initial prototype |
+| Member | GitHub | Contributions |
+|---|---|---|
+| PENG Zekai | [@zekaipeng14-netizen](https://github.com/zekaipeng14-netizen) | Project setup, game engine, packaging, documentation |
+| HE Tsz Fei | [@Fenice723](https://github.com/Fenice723) | Game logic (`main.py`) |
+| GUI Yifei | [@guiyifei1014-boop](https://github.com/guiyifei1014-boop) | Game logic (`main.py`) |
+| GUO Songlin | [@guosonglin999-hue](https://github.com/guosonglin999-hue) | Initial prototype |
+| LI Jianheng | [@Jianheng71](https://github.com/Jianheng71) | Save/load, score tracking and leaderboard |
 
 ## License
 

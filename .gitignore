@@ -221,3 +221,7 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Secret Room game save/score files
+secret_room_save.txt
+secret_room_scores.txt
