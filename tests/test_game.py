@@ -20,6 +20,12 @@ SOLUTION = (
 )
 
 
+@pytest.fixture(autouse=True)
+def _run_in_tmp_dir(tmp_path, monkeypatch):
+    """Keep save/score files written by the game out of the repository."""
+    monkeypatch.chdir(tmp_path)
+
+
 def feeder(commands):
     it = iter(commands)
 

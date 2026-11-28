@@ -8,6 +8,8 @@
 A text-based escape-room puzzle game that runs in any terminal. It needs no dependencies beyond Python's standard library.
 Built for **CS1302A Intro to Computer Programming (Agentic Coding)** by **Group 14**.
 
+▶️ **[Watch the 20-second how-to-play video](https://github.com/zekaipeng14-netizen/1302A-Group14/blob/main/docs/demo.mp4)**
+
 ```
 === Escape the Secret Room: Chapter 1 ===
 # # # # # # # # # # # # #
@@ -165,17 +167,19 @@ src/group14_secret_room/
     __init__.py    # public API: run_game, LEVELS, ITEM_DESCRIPTIONS
 tests/             # pytest suite (runs on GitHub Actions)
 prototype/         # our first single-room prototype, kept for reference
-docs/              # demo script and presentation notes
+docs/              # demo video, demo script and presentation notes
+scripts/           # script that renders docs/demo.mp4
 ```
 
 ## Team (Group 14)
 
-| GitHub | Contributions |
-|---|---|
-| [@zekaipeng14-netizen](https://github.com/zekaipeng14-netizen) | Project setup, game engine, packaging, documentation |
-| [@Fenice723](https://github.com/Fenice723) | Game logic (`main.py`) |
-| [@guiyifei1014-boop](https://github.com/guiyifei1014-boop) | Game logic (`main.py`) |
-| [@guosonglin999-hue](https://github.com/guosonglin999-hue) | Initial prototype |
+| Member | GitHub | Contributions |
+|---|---|---|
+| PENG Zekai | [@zekaipeng14-netizen](https://github.com/zekaipeng14-netizen) | Project setup, game engine, packaging, documentation |
+| HE Tsz Fei | [@Fenice723](https://github.com/Fenice723) | Game logic (`main.py`) |
+| GUI Yifei | [@guiyifei1014-boop](https://github.com/guiyifei1014-boop) | Game logic (`main.py`) |
+| GUO Songlin | [@guosonglin999-hue](https://github.com/guosonglin999-hue) | Initial prototype |
+| LI Jianheng | [@Jianheng71](https://github.com/Jianheng71) | Save/load, score tracking and leaderboard |
 
 ## License
 

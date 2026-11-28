@@ -2,5 +2,5 @@
 
 from .main import ITEM_DESCRIPTIONS, LEVELS, main, run_game
 
-__version__ = "0.1.0"
+__version__ = "0.1.1"
 __all__ = ["ITEM_DESCRIPTIONS", "LEVELS", "main", "run_game", "__version__"]

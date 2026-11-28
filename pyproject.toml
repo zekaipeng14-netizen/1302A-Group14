@@ -4,17 +4,18 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "group14_secret_room"
-version = "0.1.0"
+version = "0.1.1"
 description = "A text-based secret room puzzle adventure game in Python."
 readme = "README.md"
 requires-python = ">=3.8"
 license = "MIT"
 license-files = ["LICENSE"]
 authors = [
-    { name = "zekaipeng14-netizen" },
-    { name = "Fenice723" },
-    { name = "guiyifei1014-boop" },
-    { name = "guosonglin999-hue" },
+    { name = "PENG Zekai" },
+    { name = "HE Tsz Fei" },
+    { name = "GUI Yifei" },
+    { name = "GUO Songlin" },
+    { name = "LI Jianheng" },
 ]
 keywords = ["game", "text-adventure", "escape-room", "puzzle", "terminal"]
 classifiers = [
